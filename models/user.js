@@ -16,12 +16,17 @@ const UserSchema = new mongoose.Schema({
 },
   pets: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Pet'
+    ref: 'Pet',
     required: false
   }],
   location: {
     type: String,
     required: true
+  },
+  img: {
+    data: Buffer, 
+    contentType: String,
+    required: false
   }
 })
 

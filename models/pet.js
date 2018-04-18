@@ -39,7 +39,13 @@ const PetSchema = new mongoose.Schema({
     ref: 'User',
     required: false
   }],
-  dates: Date
+  img: [{
+    data: Buffer, 
+    contentType: String,
+    required: false
+  }],
+  dates: Date,
+  available: Boolean
 })
 
 module.exports = mongoose.model('Pet', PetSchema);

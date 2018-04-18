@@ -20,6 +20,11 @@ const OrganizationSchema = new mongoose.Schema({
   web: {
     type: String,
     required: true
+  },
+  logo: {
+    data: Buffer, 
+    contentType: String,
+    required: false
   }
 })
 
