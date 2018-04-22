@@ -19,7 +19,7 @@ const OrganizationSchema = new mongoose.Schema({
   }],
   web: {
     type: String,
-    required: true
+    required: false
   },
   logo: {
     data: Buffer, 
