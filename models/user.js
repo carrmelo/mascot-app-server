@@ -4,20 +4,19 @@ const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
-},
+  },
   organization: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Organization',
     required: false
-},
+  },
   email: {
     type: String,
     required: true
-},
+  },
   pets: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Pet',
-    required: false
+    pet: { type: mongoose.Schema.Types.ObjectId, ref: 'Pet' },
+    org: { type: mongoose.Schema.Types.ObjectId, ref: 'Organization' }
   }],
   location: {
     type: String,

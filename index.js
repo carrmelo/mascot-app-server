@@ -13,7 +13,9 @@ const port = 3000;
 app
 .use(cors())
 .use(serve(conf.clientPath))
-.use(bodyParser())
+.use(bodyParser({
+  onerror: (err, ctx) => console.error('err', err)
+}))
 .use(router.routes())
 .use(router.allowedMethods())
 

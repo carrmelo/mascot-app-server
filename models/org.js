@@ -25,7 +25,12 @@ const OrganizationSchema = new mongoose.Schema({
     data: Buffer, 
     contentType: String,
     required: false
-  }
+  },
+  queries: [{
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    pet: { type: mongoose.Schema.Types.ObjectId, ref: 'Pet' },
+    accepted: { type: Boolean, default: false }
+  }]
 })
 
 module.exports = mongoose.model('Organization', OrganizationSchema);
