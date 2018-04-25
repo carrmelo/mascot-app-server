@@ -26,7 +26,14 @@ const UserSchema = new mongoose.Schema({
     data: Buffer, 
     contentType: String,
     required: false
-  }
+  },
+  messages: [{
+    pet: { type: mongoose.Schema.Types.ObjectId, ref: 'Pet' },
+    org: { type: mongoose.Schema.Types.ObjectId, ref: 'Organization' },
+    message: { type: String },
+    alert: { type: String },
+    read: { type: Boolean, default: false }
+  }]
 })
 
 module.exports = mongoose.model('User', UserSchema);

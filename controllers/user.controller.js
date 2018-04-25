@@ -10,33 +10,105 @@ const OrganizationModel = require('../models/org');
 // }
 
 const getUsers = async (ctx, next) => {
-  ctx.body = await UserModel.find()
+  try {
+    ctx.body = await UserModel.find()
+    ctx.status = 200;
+  } catch(e) {
+    ctx.status = 400;
+    ctx.body = {
+      errors: [e.message]
+    }
+  }
 }
 
 const getUser = async (ctx, next) => {
-  const id = ctx.request.url.split('/')[2];
-  ctx.body = await UserModel.findById(id).populate('pets')
+  try {
+    const id = ctx.params.usr_id
+    ctx.body = await UserModel.findById(id).populate('pets.pet')
+  } catch(e) {
+    ctx.status = 400;
+    ctx.body = {
+      errors: [e.message]
+    }
+  }
 }
 
 const acceptAdoption = async (ctx, next) => {
-  console.log('ctx', ctx.request.body.user);
-  console.log('body', ctx.request.body);
-  console.log(ctx.request.body.pet, ctx.request.body.org);
-  console.log('AQUI', ctx.params)
-
-  await UserModel.findByIdAndUpdate(ctx.params.usr_id,
-    { $push: { pets:
-      { 
-        org: ctx.request.body.org, 
-        pet: ctx.request.body.pet
-      }}
-    });
-  ctx.send('OK')
-  ctx.response = 200
-  OrganizationModel.update( { _id: ctx.request.body.org }, { $pullAll: { queries: [ {pet: ctx.request.body.pet}] } } )
+  try {
+    await UserModel.findByIdAndUpdate(ctx.params.usr_id,
+      { $push: { 
+        pets: { 
+          org: ctx.request.body.org, 
+          pet: ctx.request.body.pet
+        },
+        messages: {
+          org: ctx.request.body.org, 
+          pet: ctx.request.body.pet,
+          message: "Su solicitud ha sido aprobada",
+          alert: "success"
+        }}
+      });
+    await OrganizationModel.findByIdAndUpdate(
+      ctx.request.body.org, 
+      { $pull:
+        { queries: { _id: ctx.request.body.query },
+        pets: ctx.request.body.pet }
+      });
+    await PetModel.findByIdAndUpdate( ctx.request.body.pet,
+      { adopted: true , owner: ctx.params.usr_id });
+    ctx.status = 200
+  } catch(e) {
+    ctx.status = 400;
+    ctx.body = {
+      errors: [e.message]
+    }
+  }  
 }
 
+const rejectAdoption = async (ctx, next) => {
+  try {
+    await UserModel.findByIdAndUpdate(ctx.params.usr_id,
+      { $push: { 
+        messages: {
+          org: ctx.request.body.org, 
+          pet: ctx.request.body.pet,
+          message: "Lo sentimos, su solicitud ha sido rechazada",
+          alert: "danger"
+        }}
+      });
+    await OrganizationModel.findByIdAndUpdate(
+      ctx.request.body.org,
+      { $pull:
+        { queries: { _id: ctx.request.body.query } }
+      });
+    await PetModel.findByIdAndUpdate(
+      ctx.request.body.pet, 
+      { $set: { available: true } }
+    );
+    ctx.status = 200
+  } catch(e) {
+    ctx.status = 400;
+    ctx.body = {
+      errors: [e.message]
+    }
+  }  
+}
 
+const markAsRead = async (ctx, next) => {
+  console.log(ctx.request.body);
+  try {
+    await UserModel.findByIdAndUpdate(ctx.params.usr_id,
+      { $pull:
+        { messages: { _id: ctx.request.body._id } }
+      });
+    ctx.status = 200
+  } catch(e) {
+    ctx.status = 400;
+    ctx.body = {
+      errors: [e.message]
+    }
+  }  
+}
 
 // exports.addPet = async (ctx, next) => {
 //   const org_id = ctx.request.body.organization;
@@ -90,5 +162,5 @@ const acceptAdoption = async (ctx, next) => {
 //   ctx.body = await UserModel.findOneAndRemove();
 // }
 
-module.exports = { getUsers, acceptAdoption, getUser }
+module.exports = { getUsers, acceptAdoption, getUser, rejectAdoption, markAsRead }
 // module.exports = { addUser, editUser, applyForAdoption, applyForResidence, deleteUser }

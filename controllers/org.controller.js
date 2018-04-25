@@ -10,18 +10,39 @@ const PetModel = require('../models/pet');
 // }
 
 exports.getOrgs = async (ctx, next) => {
-  ctx.body = await OrgModel.find()
+  try {
+    ctx.body = await OrgModel.find()
+  } catch(e) {
+    ctx.status = 400;
+    ctx.body = {
+      errors: [e.message]
+    }
+  }
 }
 
 exports.getOrg = async (ctx, next) => {
-  const id = ctx.request.url.split('/')[2];
-  ctx.body = await OrgModel.findById(id).populate('pets queries.user queries.pet')
+  try {
+    const id = ctx.params.org_id;
+    ctx.body = await OrgModel.findById(id).populate('pets queries.user queries.pet')
+  } catch(e) {
+    ctx.status = 400;
+    ctx.body = {
+      errors: [e.message]
+    }
+  }
 }
 
 exports.addOrg = async (ctx, next) => {
-  const newOrg = new OrgModel(ctx.request.body);
-  newOrg.save();
-  ctx.response = 200;
+  try {
+    const newOrg = new OrgModel(ctx.request.body);
+    newOrg.save();
+    ctx.status = 200
+  } catch(e) {
+    ctx.status = 400;
+    ctx.body = {
+      errors: [e.message]
+    }
+  }
 }
 
 // exports.editOrg = async (ctx, next) => {
@@ -29,15 +50,27 @@ exports.addOrg = async (ctx, next) => {
   
   // }
 exports.adoptionRequest = async (ctx, next) => {
-  await OrgModel.findByIdAndUpdate(
-    ctx.request.body.org,
-    { $push: { queries:
-      { 
-        user: ctx.request.body.user, 
-        pet: ctx.request.body.pet
-      }}
-    });
-  ctx.response = 200;
+  try {
+    await OrgModel.findByIdAndUpdate(
+      ctx.request.body.org,
+      { $push: { queries:
+        { 
+          user: ctx.request.body.user, 
+          pet: ctx.request.body.pet
+        }},
+      }
+    );
+    await PetModel.findByIdAndUpdate(
+      ctx.request.body.pet, 
+      { $set: { available: false } }
+    );
+    ctx.status = 200
+  } catch(e) {
+    ctx.status = 400;
+    ctx.body = {
+      errors: [e.message]
+    }
+  }
 }
 // exports.acceptResidence = async (ctx, next) => {
 //   console.log('acceptResidence');

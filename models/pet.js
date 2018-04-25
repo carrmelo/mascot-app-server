@@ -40,11 +40,10 @@ const PetSchema = new mongoose.Schema({
     ref: 'User',
     required: false
   },
-  // img: {
-  //   data: Buffer, 
-  //   contentType: String,
-  //   required: false
-  // },
+  image: {
+    type: String,
+    required: false
+  },
   // dates: Date,
   available: { type: Boolean, default: true }
 })
