@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: true
+    required: false
   },
   pets: [{
     pet: { type: mongoose.Schema.Types.ObjectId, ref: 'Pet' },
@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
   }],
   location: {
     type: String,
-    required: true
+    required: false
   },
   img: {
     data: Buffer, 

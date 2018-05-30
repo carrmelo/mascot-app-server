@@ -2,13 +2,6 @@ const mongoose = require('mongoose');
 const OrgModel = require('../models/org');
 const PetModel = require('../models/pet');
 
-
-// exports.addPet = async (ctx, next) => {
-//   const newPet = new PetModel(ctx.request.body);
-//   newPet.save()
-//   ctx.response = 200
-// }
-
 exports.getOrgs = async (ctx, next) => {
   try {
     ctx.body = await OrgModel.find()
@@ -45,10 +38,6 @@ exports.addOrg = async (ctx, next) => {
   }
 }
 
-// exports.editOrg = async (ctx, next) => {
-  //   console.log('editOrganization');
-  
-  // }
 exports.adoptionRequest = async (ctx, next) => {
   try {
     await OrgModel.findByIdAndUpdate(
@@ -72,18 +61,3 @@ exports.adoptionRequest = async (ctx, next) => {
     }
   }
 }
-// exports.acceptResidence = async (ctx, next) => {
-//   console.log('acceptResidence');
-  
-// }
-// exports.rejectAdoption = async (ctx, next) => {
-//   console.log('rejectAdoption');
-  
-// }
-// exports.rejectResidence = async (ctx, next) => {
-//   console.log('rejectResidence');
-  
-// }
-// exports.deleteOrg = async (ctx, next) => {
-//   ctx.body = await OrgModel.findOneAndRemove();  
-// }

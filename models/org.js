@@ -3,15 +3,15 @@ const mongoose = require('mongoose')
 const OrganizationSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: false
 },
   location: {
     type: String,
-    required: true
+    required: false
 },
   email: {
     type: String,
-    required: true
+    required: false
 },
   pets: [{
     type: mongoose.Schema.Types.ObjectId,

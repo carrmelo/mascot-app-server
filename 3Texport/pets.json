@@ -1,0 +1,96 @@
+{ 
+    "_id" : ObjectId("5b028c3014873c306f4ee25f"), 
+    "adopted" : false, 
+    "available" : true, 
+    "species" : "Perro", 
+    "breed" : "Mestizo", 
+    "name" : "Nicolás", 
+    "age" : NumberInt(6), 
+    "weight" : NumberInt(13), 
+    "size" : "Mediano", 
+    "location" : "Barcelona", 
+    "organization" : ObjectId("5b005a9cb8876c2f86bb1591"), 
+    "owner" : null, 
+    "image" : "http://res.cloudinary.com/carrmelo/image/upload/a_0/v1524612525/IMG_8966.jpg", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5b028c3b14873c306f4ee261"), 
+    "adopted" : false, 
+    "available" : true, 
+    "species" : "Perro", 
+    "breed" : "Mestizo", 
+    "name" : "Teresa", 
+    "age" : NumberInt(14), 
+    "weight" : NumberInt(13), 
+    "size" : "Mediano", 
+    "location" : "Barcelona", 
+    "organization" : ObjectId("5b005a9cb8876c2f86bb1591"), 
+    "owner" : null, 
+    "image" : "http://res.cloudinary.com/carrmelo/image/upload/c_scale,w_300/a_0/v1524612529/IMG_3938.jpg", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5b028c4714873c306f4ee262"), 
+    "adopted" : false, 
+    "available" : true, 
+    "species" : "Perro", 
+    "breed" : "Mestizo", 
+    "name" : "Gaia", 
+    "age" : NumberInt(8), 
+    "weight" : NumberInt(15), 
+    "size" : "Mediano", 
+    "location" : "Barcelona", 
+    "organization" : ObjectId("5b005a9cb8876c2f86bb1591"), 
+    "owner" : null, 
+    "image" : "https://images.dog.ceo/breeds/malamute/n02110063_17073.jpg", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5b028e5214873c306f4ee263"), 
+    "adopted" : false, 
+    "available" : true, 
+    "species" : "Perro", 
+    "breed" : "Redbone", 
+    "name" : "Gordo", 
+    "age" : NumberInt(8), 
+    "weight" : NumberInt(20), 
+    "size" : "Grande", 
+    "location" : "Barcelona", 
+    "organization" : ObjectId("5b005a9cb8876c2f86bb1591"), 
+    "owner" : null, 
+    "image" : "https://images.dog.ceo/breeds/redbone/n02090379_5200.jpg", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5b028f0b14873c306f4ee264"), 
+    "adopted" : false, 
+    "available" : true, 
+    "species" : "Perro", 
+    "breed" : "Mestizo", 
+    "name" : "Boston", 
+    "age" : NumberInt(3), 
+    "weight" : NumberInt(15), 
+    "size" : "Mediano", 
+    "location" : "Barcelona", 
+    "organization" : ObjectId("5b005a9cb8876c2f86bb1591"), 
+    "owner" : null, 
+    "image" : "https://images.dog.ceo/breeds/elkhound-norwegian/n02091467_5755.jpg", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5b02912014873c306f4ee265"), 
+    "adopted" : false, 
+    "available" : true, 
+    "species" : "Perro", 
+    "breed" : "Borzoi", 
+    "name" : "Lassie", 
+    "age" : NumberInt(6), 
+    "weight" : NumberInt(22), 
+    "size" : "Grande", 
+    "location" : "Barcelona", 
+    "organization" : ObjectId("5b005a9cb8876c2f86bb1591"), 
+    "owner" : null, 
+    "image" : "https://images.dog.ceo/breeds/borzoi/n02090622_6131.jpg", 
+    "__v" : NumberInt(0)
+}

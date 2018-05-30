@@ -41,12 +41,3 @@ exports.addPet = async (ctx, next) => {
     }
   }
 }
-
-// exports.editPet = async (ctx, next) => {
-//   console.log('editUser');
-  
-// }
-
-// exports.deletePet = async (ctx, next) => {
-//   ctx.body = await PetModel.findOneAndRemove();
-// }
