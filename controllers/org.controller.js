@@ -39,18 +39,19 @@ exports.addOrg = async (ctx, next) => {
 }
 
 exports.adoptionRequest = async (ctx, next) => {
+  const { user, pet, org } = ctx.request.body;
   try {
     await OrgModel.findByIdAndUpdate(
-      ctx.request.body.org,
+      org,
       { $push: { queries:
         { 
-          user: ctx.request.body.user, 
-          pet: ctx.request.body.pet
+          user, 
+          pet
         }},
       }
     );
     await PetModel.findByIdAndUpdate(
-      ctx.request.body.pet, 
+      pet, 
       { $set: { available: false } }
     );
     ctx.status = 200
