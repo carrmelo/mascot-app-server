@@ -28,28 +28,30 @@ const getUser = async (ctx, next) => {
 }
 
 const acceptAdoption = async (ctx, next) => {
+  const { org, pet, query } = ctx.request.body
+  const usr_id = ctx.params.usr_id
   try {
-    await UserModel.findByIdAndUpdate(ctx.params.usr_id,
+    await UserModel.findByIdAndUpdate(usr_id,
       { $push: { 
         pets: { 
-          org: ctx.request.body.org, 
-          pet: ctx.request.body.pet
+          org,
+          pet
         },
         messages: {
-          org: ctx.request.body.org, 
-          pet: ctx.request.body.pet,
+          org,
+          pet,
           message: "Su solicitud ha sido aprobada",
           alert: "success"
         }}
       });
     await OrganizationModel.findByIdAndUpdate(
-      ctx.request.body.org, 
+      org, 
       { $pull:
-        { queries: { _id: ctx.request.body.query },
-        pets: ctx.request.body.pet }
+        { queries: { _id: query },
+        pets: pet }
       });
-    await PetModel.findByIdAndUpdate( ctx.request.body.pet,
-      { adopted: true , owner: ctx.params.usr_id });
+    await PetModel.findByIdAndUpdate( pet,
+      { adopted: true , owner: usr_id });
     ctx.status = 200
   } catch(e) {
     ctx.status = 400;
@@ -60,23 +62,25 @@ const acceptAdoption = async (ctx, next) => {
 }
 
 const rejectAdoption = async (ctx, next) => {
+  const { org, pet, query } = ctx.request.body
+  const usr_id = ctx.params.usr_id
   try {
-    await UserModel.findByIdAndUpdate(ctx.params.usr_id,
+    await UserModel.findByIdAndUpdate(usr_id,
       { $push: { 
         messages: {
-          org: ctx.request.body.org, 
-          pet: ctx.request.body.pet,
+          org, 
+          pet,
           message: "Lo sentimos, su solicitud ha sido rechazada",
           alert: "danger"
         }}
       });
     await OrganizationModel.findByIdAndUpdate(
-      ctx.request.body.org,
+      org,
       { $pull:
-        { queries: { _id: ctx.request.body.query } }
+        { queries: { _id: query } }
       });
     await PetModel.findByIdAndUpdate(
-      ctx.request.body.pet, 
+      pet, 
       { $set: { available: true } }
     );
     ctx.status = 200
@@ -89,11 +93,12 @@ const rejectAdoption = async (ctx, next) => {
 }
 
 const markAsRead = async (ctx, next) => {
-  console.log(ctx.request.body);
+  const _id = ctx.request.body._id
+  const usr_id = ctx.params.usr_id
   try {
-    await UserModel.findByIdAndUpdate(ctx.params.usr_id,
+    await UserModel.findByIdAndUpdate(usr_id,
       { $pull:
-        { messages: { _id: ctx.request.body._id } }
+        { messages: { _id } }
       });
     ctx.status = 200
   } catch(e) {
