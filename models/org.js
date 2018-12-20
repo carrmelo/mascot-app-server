@@ -1,36 +1,40 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const OrganizationSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: false
-},
+    required: false,
+  },
   location: {
     type: String,
-    required: false
-},
+    required: false,
+  },
   email: {
     type: String,
-    required: false
-},
-  pets: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Pet'
-  }],
+    required: false,
+  },
+  pets: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Pet',
+    },
+  ],
   web: {
     type: String,
-    required: false
+    required: false,
   },
   logo: {
-    data: Buffer, 
+    data: Buffer,
     contentType: String,
-    required: false
+    required: false,
   },
-  queries: [{
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    pet: { type: mongoose.Schema.Types.ObjectId, ref: 'Pet' },
-    accepted: { type: Boolean, default: false }
-  }]
-})
+  queries: [
+    {
+      user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+      pet: { type: mongoose.Schema.Types.ObjectId, ref: 'Pet' },
+      accepted: { type: Boolean, default: false },
+    },
+  ],
+});
 
 module.exports = mongoose.model('Organization', OrganizationSchema);

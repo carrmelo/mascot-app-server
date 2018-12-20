@@ -1,0 +1,23 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jquery": true,
+    "node": true,
+    "mocha": true
+  },
+  "extends": ["airbnb-base", "plugin:prettier/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": ["json"],
+  "rules": {
+    "indent": ["error", 2],
+    "keyword-spacing": "error",
+    "linebreak-style": "error",
+    "quotes": ["error", "single"],
+    "semi": "error",
+    "no-undef": 0
+  }
+}

@@ -1,39 +1,43 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   organization: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Organization',
-    required: false
+    required: false,
   },
   email: {
     type: String,
-    required: false
+    required: false,
   },
-  pets: [{
-    pet: { type: mongoose.Schema.Types.ObjectId, ref: 'Pet' },
-    org: { type: mongoose.Schema.Types.ObjectId, ref: 'Organization' }
-  }],
+  pets: [
+    {
+      pet: { type: mongoose.Schema.Types.ObjectId, ref: 'Pet' },
+      org: { type: mongoose.Schema.Types.ObjectId, ref: 'Organization' },
+    },
+  ],
   location: {
     type: String,
-    required: false
+    required: false,
   },
   img: {
-    data: Buffer, 
+    data: Buffer,
     contentType: String,
-    required: false
+    required: false,
   },
-  messages: [{
-    pet: { type: mongoose.Schema.Types.ObjectId, ref: 'Pet' },
-    org: { type: mongoose.Schema.Types.ObjectId, ref: 'Organization' },
-    message: { type: String },
-    alert: { type: String },
-    read: { type: Boolean, default: false }
-  }]
-})
+  messages: [
+    {
+      pet: { type: mongoose.Schema.Types.ObjectId, ref: 'Pet' },
+      org: { type: mongoose.Schema.Types.ObjectId, ref: 'Organization' },
+      message: { type: String },
+      alert: { type: String },
+      read: { type: Boolean, default: false },
+    },
+  ],
+});
 
 module.exports = mongoose.model('User', UserSchema);

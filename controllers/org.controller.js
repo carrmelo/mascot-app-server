@@ -1,63 +1,64 @@
-const mongoose = require('mongoose');
-const OrgModel = require('../models/org');
-const PetModel = require('../models/pet');
+const { Organization, Pet } = require('../models');
 
-exports.getOrgs = async (ctx, next) => {
+exports.getOrgs = async ctx => {
   try {
-    ctx.body = await OrgModel.find()
-  } catch(e) {
+    ctx.status = 200;
+    ctx.body = await Organization.find();
+  } catch (e) {
     ctx.status = 400;
     ctx.body = {
-      errors: [e.message]
-    }
+      errors: [e.message],
+    };
   }
-}
+};
 
-exports.getOrg = async (ctx, next) => {
+exports.getOrg = async ctx => {
   try {
-    const id = ctx.params.org_id;
-    ctx.body = await OrgModel.findById(id).populate('pets queries.user queries.pet')
-  } catch(e) {
+    const { org_id: id } = ctx.params;
+    ctx.status = 200;
+    ctx.body = await Organization.findById(id).populate(
+      'pets queries.user queries.pet',
+    );
+  } catch (e) {
     ctx.status = 400;
     ctx.body = {
-      errors: [e.message]
-    }
+      errors: [e.message],
+    };
   }
-}
+};
 
-exports.addOrg = async (ctx, next) => {
+exports.addOrg = async ctx => {
   try {
-    const newOrg = new OrgModel(ctx.request.body);
+    const newOrg = new Organization(ctx.request.body);
     newOrg.save();
-    ctx.status = 200
-  } catch(e) {
+    ctx.status = 201;
+  } catch (e) {
     ctx.status = 400;
     ctx.body = {
-      errors: [e.message]
-    }
+      errors: [e.message],
+    };
   }
-}
+};
 
-exports.adoptionRequest = async (ctx, next) => {
+exports.adoptionRequest = async ctx => {
+  const { user, pet, org } = ctx.request.body;
   try {
-    await OrgModel.findByIdAndUpdate(
-      ctx.request.body.org,
-      { $push: { queries:
-        { 
-          user: ctx.request.body.user, 
-          pet: ctx.request.body.pet
-        }},
-      }
-    );
-    await PetModel.findByIdAndUpdate(
-      ctx.request.body.pet, 
-      { $set: { available: false } }
-    );
-    ctx.status = 200
-  } catch(e) {
+    await Organization.findByIdAndUpdate(org, {
+      $push: {
+        queries: {
+          user,
+          pet,
+        },
+      },
+    });
+    await Pet.findByIdAndUpdate(pet, {
+      $set: { available: false },
+    });
+    ctx.status = 200;
+  } catch (e) {
     ctx.status = 400;
     ctx.body = {
-      errors: [e.message]
-    }
+      errors: [e.message],
+    };
   }
-}
+};
