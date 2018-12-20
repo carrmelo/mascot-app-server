@@ -89,7 +89,7 @@ const rejectAdoption = async ctx => {
 };
 
 const markAsRead = async ctx => {
-  const {_id: id} = ctx.request.body;
+  const { _id: id } = ctx.request.body;
   try {
     await User.findByIdAndUpdate(ctx.params.usr_id, {
       $pull: { messages: { _id: id } },
