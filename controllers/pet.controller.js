@@ -1,43 +1,43 @@
-const mongoose = require('mongoose');
-const PetModel = require('../models/pet');
-const OrganizationModel = require('../models/org');
+const { Organization, Pet } = require('../models');
 
-exports.getPets = async (ctx, next) => {
+exports.getPets = async ctx => {
   try {
-    ctx.body = await PetModel.find()
-  } catch(e) {
+    ctx.status = 200;
+    ctx.body = await Pet.find();
+  } catch (e) {
     ctx.status = 400;
     ctx.body = {
-      errors: [e.message]
-    }
+      errors: [e.message],
+    };
   }
-}
+};
 
-exports.getPet = async (ctx, next) => {
+exports.getPet = async ctx => {
   try {
-    const id = ctx.params.pet_id
-    ctx.body = await PetModel.findById(id).populate('organization')
-  } catch(e) {
+    const { pet_id: id } = ctx.params;
+    ctx.status = 200;
+    ctx.body = await Pet.findById(id).populate('organization');
+  } catch (e) {
     ctx.status = 400;
     ctx.body = {
-      errors: [e.message]
-    }
+      errors: [e.message],
+    };
   }
-}
+};
 
-exports.addPet = async (ctx, next) => {
+exports.addPet = async ctx => {
   try {
-    const org_id = ctx.request.body.organization;
-    const newPet = new PetModel(ctx.request.body);
-    newPet.save()
-    const org = await OrganizationModel.findById(org_id);
+    const { organization: id } = ctx.request.body;
+    const newPet = new Pet(ctx.request.body);
+    newPet.save();
+    const org = await Organization.findById(id);
     org.pets.push(newPet);
     org.save();
-    ctx.status = 200
-  } catch(e) {
+    ctx.status = 201;
+  } catch (e) {
     ctx.status = 400;
     ctx.body = {
-      errors: [e.message]
-    }
+      errors: [e.message],
+    };
   }
-}
+};

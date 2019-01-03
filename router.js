@@ -1,39 +1,42 @@
-const Router = require('koa-router');
+const router = require('koa-router')();
 
-const UserController = require('./controllers/user.controller');
-const PetController = require('./controllers/pet.controller');
-const OrgController = require('./controllers/org.controller');
+const {
+  userController,
+  petController,
+  orgController,
+} = require('./controllers');
 
-const router = new Router();
+router
+  .get('/pets/:pet_id', petController.getPet)
+  .get('/pets', petController.getPets)
+  .post('/pets', petController.addPet);
 
-router.get('/pets/:pet_id', PetController.getPet);
-router.get('/pets', PetController.getPets);
-router.post('/pets', PetController.addPet);
+router
+  .get('/orgs', orgController.getOrgs)
+  .get('/orgs/:org_id', orgController.getOrg)
+  .post('/orgs', orgController.addOrg)
+  .put('/orgs/:org_id', orgController.adoptionRequest);
 
-router.get('/orgs', OrgController.getOrgs);
-router.get('/orgs/:org_id', OrgController.getOrg);
-router.post('/orgs', OrgController.addOrg);
-router.put('/orgs/:org_id', OrgController.adoptionRequest);
-
-router.get('/users', UserController.getUsers);
-router.get('/users/:usr_id', UserController.getUser);
-router.put('/users/:usr_id/accepted', UserController.acceptAdoption);
-router.put('/users/:usr_id/rejected', UserController.rejectAdoption);
-router.put('/users/:usr_id/markAsRead', UserController.markAsRead);
-router.post('/users', UserController.addUser);
+router
+  .get('/users', userController.getUsers)
+  .get('/users/:usr_id', userController.getUser)
+  .put('/users/:usr_id/accepted', userController.acceptAdoption)
+  .put('/users/:usr_id/rejected', userController.rejectAdoption)
+  .put('/users/:usr_id/markAsRead', userController.markAsRead)
+  .post('/users', userController.addUser);
 
 // PENDING ROUTES
-// router.put('/pets/:pet_id', PetController.editPet);
-// router.delete('/pets/:pet_id', PetController.deletePet);
+// router.put('/pets/:pet_id', petController.editPet);
+// router.delete('/pets/:pet_id', petController.deletePet);
 
-// router.put('/orgs/:org_id', OrgController.editOrg);
-// router.put('/orgs/:org_id', OrgController.rejectResidence);
-// router.delete('/orgs/:org_id', OrgController.deleteOrg);
-// router.post('/orgs/:org_id/pets', OrgController.addPet);
+// router.put('/orgs/:org_id', orgController.editOrg);
+// router.put('/orgs/:org_id', orgController.rejectResidence);
+// router.delete('/orgs/:org_id', orgController.deleteOrg);
+// router.post('/orgs/:org_id/pets', orgController.addPet);
 
-// router.post('/users/:user_id/pets', PetController.addPet);
-// router.put('/users/:user_id', UserController.editUser);
-// router.put('/users/:user_id', UserController.applyForResidence);
-// router.delete('/users/:user_id', UserController.deleteUser);
+// router.post('/users/:user_id/pets', petController.addPet);
+// router.put('/users/:user_id', userController.editUser);
+// router.put('/users/:user_id', userController.applyForResidence);
+// router.delete('/users/:user_id', userController.deleteUser);
 
 module.exports = router;

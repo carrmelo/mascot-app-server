@@ -1,3 +1,3 @@
 module.exports = {
-  clientPath: __dirname + '/../pet-app-client'
+  clientPath: `${__dirname}/../pet-app-client`,
 };

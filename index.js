@@ -1,20 +1,23 @@
 const Koa = require('koa');
-const bodyParser = require('koa-bodyparser');
-const app = new Koa();
+const cors = require('@koa/cors');
 const serve = require('koa-static');
-const cors = require('koa-cors');
+const bodyParser = require('koa-bodyparser');
+require('./db');
 
-const router = require('./router');
-const db = require('./db');
 const conf = require('./config');
+const router = require('./router');
 
-const port = 3000;
+const app = new Koa();
+const PORT = process.env.PORT || 3000;
 
 app
-.use(cors())
-.use(serve(conf.clientPath))
-.use(bodyParser())
-.use(router.routes())
-.use(router.allowedMethods())
+  .use(cors())
+  .use(serve(conf.clientPath))
+  .use(bodyParser())
+  .use(router.routes())
+  .use(router.allowedMethods());
 
-app.listen(port, () => console.log(`Server running on ${port}`));
+app.listen(PORT, err => {
+  if (err) return console.error('ERROR: ', err); // eslint-disable-line no-console
+  return console.log(`Server running on ${PORT}`); // eslint-disable-line no-console
+});
