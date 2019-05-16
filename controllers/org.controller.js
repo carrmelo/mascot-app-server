@@ -27,19 +27,6 @@ exports.getOrg = async ctx => {
   }
 };
 
-exports.addOrg = async ctx => {
-  try {
-    const newOrg = new Organization(ctx.request.body);
-    newOrg.save();
-    ctx.status = 201;
-  } catch (e) {
-    ctx.status = 400;
-    ctx.body = {
-      errors: [e.message],
-    };
-  }
-};
-
 exports.adoptionRequest = async ctx => {
   const { user, pet, org } = ctx.request.body;
   try {
