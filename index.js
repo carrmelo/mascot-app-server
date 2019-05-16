@@ -4,6 +4,8 @@ const serve = require('koa-static');
 const bodyParser = require('koa-bodyparser');
 require('./db');
 
+require('dotenv').config();
+
 const conf = require('./config');
 const router = require('./router');
 
