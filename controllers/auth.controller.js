@@ -11,8 +11,6 @@ exports.addOrg = async ctx => {
     newOrg.save();
     // eslint-disable-next-line no-underscore-dangle
     const token = signToken(newOrg._id);
-    console.log(token);
-
     const data = newOrg.toObject();
     delete data.password;
     ctx.status = 201;
