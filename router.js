@@ -1,6 +1,7 @@
 const router = require('koa-router')();
 
 const {
+  authController,
   userController,
   petController,
   orgController,
@@ -14,7 +15,7 @@ router
 router
   .get('/orgs', orgController.getOrgs)
   .get('/orgs/:org_id', orgController.getOrg)
-  .post('/orgs', orgController.addOrg)
+  .post('/orgs', authController.addOrg)
   .put('/orgs/:org_id', orgController.adoptionRequest);
 
 router
